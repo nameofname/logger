@@ -1,7 +1,7 @@
 {
-  "name": "logger",
+  "name": "pint-sized-logger",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/logger.js",
   "repository": "https://github.com/nameofname/logger.git",
   "author": "nameofname <nameofemail@gmail.com>",
   "license": "MIT",
