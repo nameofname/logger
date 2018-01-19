@@ -21,3 +21,5 @@ logger.info('Well gee, it\'s info');
 logger.trace('Neato, a trace'); 
 
 ```
+
+![alt text](https://raw.githubusercontent.com/nameofname/pint-sized-logger/master/img/screen-cap.jpeg)
