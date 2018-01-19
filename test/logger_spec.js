@@ -9,7 +9,6 @@ const sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 
 
-// sinon.assertCalledWith(mySpy, "foo");
 describe('logger', () => {
 
     beforeEach(() => {
@@ -146,6 +145,20 @@ describe('logger', () => {
 
             expect(errorCallCount).to.equal(0); // never uses console.error
         });
+    });
+
+    describe('logging an object or array', () => {
+        it("should strinify objects and arrays", () => {    
+            process.env.LOG_LEVEL = 'info';
+            const obj = {ron: 'ald'};
+            const arr = [1, 2, 3];
+
+            logger.info(obj);
+            expect(console.log.args[0][0]).to.equal(colors.blue(JSON.stringify(obj, null, 2)));
+
+            logger.info(arr);
+            expect(console.log.args[1][0]).to.equal(colors.blue(JSON.stringify(arr, null, 2)));
+            });
     });
 
 });
