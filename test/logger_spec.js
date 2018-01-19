@@ -12,7 +12,7 @@ chai.use(sinonChai);
 // sinon.assertCalledWith(mySpy, "foo");
 describe('logger', () => {
 
-    before(() => {
+    beforeEach(() => {
         sinon.spy(console, 'log');
         sinon.spy(console, 'error');
     });
@@ -24,8 +24,8 @@ describe('logger', () => {
 
     describe('.error()', () => {
         it('should log if the LOG_LEVEL is error or higher', () => {
-            const logCallCount = console.log.callCount
-            const errorCallCount = console.error.callCount
+            const logCallCount = console.log.callCount || 0;
+            const errorCallCount = console.error.callCount || 0;
             
             process.env.LOG_LEVEL = 'nothing';
             logger.error('one');
@@ -57,8 +57,8 @@ describe('logger', () => {
 
     describe('.warn()', () => {
         it('should log if the LOG_LEVEL is warn or higher', () => {
-            const logCallCount = console.log.callCount
-            const errorCallCount = console.error.callCount
+            const logCallCount = console.log.callCount || 0;
+            const errorCallCount = console.error.callCount || 0;
 
             process.env.LOG_LEVEL = 'nothing';
             logger.warn('one');
@@ -66,97 +66,85 @@ describe('logger', () => {
 
             process.env.LOG_LEVEL = 'error';
             logger.warn('two');
-            expect(console.log.callCount).to.equal(logCallCount + 1);
-            expect(console.log.args[0][0]).to.equal(colors.yellow('two'));
+            expect(console.log.callCount).to.equal(logCallCount);
 
             process.env.LOG_LEVEL = 'warn';
             logger.warn('three');
-            expect(console.log.callCount).to.equal(logCallCount + 2);
-            expect(console.log.args[1][0]).to.equal(colors.yellow('three'));
+            expect(console.log.callCount).to.equal(logCallCount + 1);
+            expect(console.log.args[0][0]).to.equal(colors.yellow('three'));
 
             process.env.LOG_LEVEL = 'info';
             logger.warn('four');
-            expect(console.log.callCount).to.equal(logCallCount + 3);
-            expect(console.log.args[2][0]).to.equal(colors.yellow('four'));
+            expect(console.log.callCount).to.equal(logCallCount + 2);
+            expect(console.log.args[1][0]).to.equal(colors.yellow('four'));
 
             process.env.LOG_LEVEL = 'trace';
             logger.warn('five');
-            expect(console.log.callCount).to.equal(logCallCount + 4);
-            expect(console.log.args[3][0]).to.equal(colors.yellow('five'));
+            expect(console.log.callCount).to.equal(logCallCount + 3);
+            expect(console.log.args[2][0]).to.equal(colors.yellow('five'));
 
             expect(errorCallCount).to.equal(0); // never uses console.error
-
-
-
-
-
-            // process.env.LOG_LEVEL = 'nothing';
-            // logger.warn('one');
-            // expect(consoleSpy).not.toHaveBeenCalled();
-
-            // process.env.LOG_LEVEL = 'error';
-            // logger.warn('two');
-            // expect(consoleSpy).not.toHaveBeenCalled();
-
-            // process.env.LOG_LEVEL = 'warn';
-            // logger.warn('three');
-            // expect(consoleSpy).toHaveBeenCalledWith(colors.yellow('three'));
-
-            // process.env.LOG_LEVEL = 'info';
-            // logger.warn('four');
-            // expect(consoleSpy).toHaveBeenCalledWith(colors.yellow('four'));
-
-            // process.env.LOG_LEVEL = 'trace';
-            // logger.warn('five');
-            // expect(consoleSpy).toHaveBeenCalledWith(colors.yellow('five'));
         });
     });
 
     describe('.info()', () => {
-        it('should log if the LOG_LEVEL is warn or higher', () => {
+        it('should log if the LOG_LEVEL is info or higher', () => {
+            const logCallCount = console.log.callCount || 0;
+            const errorCallCount = console.error.callCount || 0;
+
             process.env.LOG_LEVEL = 'nothing';
             logger.info('one');
-            expect(consoleSpy).not.toHaveBeenCalled();
+            expect(console.log.callCount).to.equal(logCallCount);
 
             process.env.LOG_LEVEL = 'error';
             logger.info('two');
-            expect(consoleSpy).not.toHaveBeenCalled();
+            expect(console.log.callCount).to.equal(logCallCount);
 
             process.env.LOG_LEVEL = 'warn';
             logger.info('three');
-            expect(consoleSpy).not.toHaveBeenCalled();
+            expect(console.log.callCount).to.equal(logCallCount);
 
             process.env.LOG_LEVEL = 'info';
             logger.info('four');
-            expect(consoleSpy).toHaveBeenCalledWith(colors.blue('four'));
+            expect(console.log.callCount).to.equal(logCallCount + 1);
+            expect(console.log.args[0][0]).to.equal(colors.blue('four'));
 
             process.env.LOG_LEVEL = 'trace';
             logger.info('five');
-            expect(consoleSpy).toHaveBeenCalledWith(colors.blue('five'));
+            expect(console.log.callCount).to.equal(logCallCount + 2);
+            expect(console.log.args[1][0]).to.equal(colors.blue('five'));
+
+            expect(errorCallCount).to.equal(0); // never uses console.error
         });
     });
 
     describe('.trace()', () => {
         it('should log if the LOG_LEVEL is warn or higher', () => {
+            const logCallCount = console.log.callCount || 0;
+            const errorCallCount = console.error.callCount || 0;
+
             process.env.LOG_LEVEL = 'nothing';
             logger.trace('one');
-            expect(consoleSpy).not.toHaveBeenCalled();
+            expect(console.log.callCount).to.equal(logCallCount);
 
             process.env.LOG_LEVEL = 'error';
             logger.trace('two');
-            expect(consoleSpy).not.toHaveBeenCalled();
+            expect(console.log.callCount).to.equal(logCallCount);
 
             process.env.LOG_LEVEL = 'warn';
             logger.trace('three');
-            expect(consoleSpy).not.toHaveBeenCalled();
+            expect(console.log.callCount).to.equal(logCallCount);
 
             process.env.LOG_LEVEL = 'info';
             logger.trace('four');
-            expect(consoleSpy).not.toHaveBeenCalled();
+            expect(console.log.callCount).to.equal(logCallCount);
 
             process.env.LOG_LEVEL = 'trace';
             logger.trace('five');
-            expect(consoleSpy).toHaveBeenCalledWith(colors.grey('five'));
+            expect(console.log.callCount).to.equal(logCallCount + 1);
+            expect(console.log.args[0][0]).to.equal(colors.grey('five'));
+
+            expect(errorCallCount).to.equal(0); // never uses console.error
         });
     });
 
