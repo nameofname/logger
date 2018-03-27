@@ -1,6 +1,6 @@
 "use strict";
 
-const colors = require('colors');
+const colors = require('colors/safe');
 const noop = () => {};
 const getLevel = ()=> {
     const logLevel = process.env.LOG_LEVEL ? process.env.LOG_LEVEL : 'info';

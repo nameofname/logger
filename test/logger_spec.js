@@ -1,7 +1,7 @@
 "use strict";
 
 const logger = require('../src/logger');
-const colors = require('colors');
+const colors = require('colors/safe');
 const chai  = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
