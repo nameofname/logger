@@ -7,7 +7,7 @@ const getLevel = ()=> {
     const levels = ['error', 'warn', 'info', 'trace'];
     return levels.indexOf(logLevel);
 };
-const log = (messages, color, isErr) => {
+const log = (messages, color) => {
     const arr = messages.map(m => {
         const isPrimitive = ['string', 'number', 'boolean', 'undefined'].indexOf(typeof m) > -1 || m === null;
         const isError = m instanceof Error;
@@ -29,11 +29,7 @@ const log = (messages, color, isErr) => {
             return m;
         }
     });
-    if (isErr) {
-        return console.error(...arr.map(a => color(a)));
-    } else {
-        return console.log(...arr.map(a => color(a)));
-    }
+    return console.log(...arr.map(a => color(a)));
 };
 
 
